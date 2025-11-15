@@ -1,0 +1,14 @@
+# Node
+node_modules/
+.env
+*.log
+
+# macOS
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+
+# Redis dump (if any)
+dump.rdb

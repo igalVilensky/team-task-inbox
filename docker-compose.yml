@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  tti-mongo:
+    image: mongo:7.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  tti-redis:
+    image: redis:8
+    ports:
+      - "6380:6379"
+
+  tti-rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672" # AMQP
+      - "15672:15672" # Management UI
+
+volumes:
+  mongo-data:
