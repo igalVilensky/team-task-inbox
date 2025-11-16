@@ -1,5 +1,6 @@
 const Task = require("../models/Task");
 const rabbitMQ = require("../config/rabbitmq");
+const redisClient = require("../config/redis");
 
 class TaskService {
   async createTask(data) {
@@ -48,6 +49,17 @@ class TaskService {
   }
 
   async computeStats() {
+    // Connect to Redis
+    const redis = await redisClient.connect();
+
+    // Try cache first
+    const cachedStats = await redis.get("taskStats");
+    if (cachedStats) {
+      console.log("Using cached stats from Redis");
+      return JSON.parse(cachedStats);
+    }
+
+    // Fallback to MongoDB (cache miss)
     const totalTasks = await Task.countDocuments();
     const statusCounts = await Task.aggregate([
       { $group: { _id: "$status", count: { $sum: 1 } } },
