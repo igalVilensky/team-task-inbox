@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const routes = require("./routes"); // or "./routes/index.js"
 
 const app = express();
 
@@ -24,5 +25,8 @@ app.use((req, res) => {
     path: req.originalUrl,
   });
 });
+
+const taskRoutes = require("./routes/taskRoutes");
+app.use("/api", routes);
 
 module.exports = app;

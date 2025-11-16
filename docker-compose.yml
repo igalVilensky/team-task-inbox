@@ -1,3 +1,5 @@
+# Optional Docker setup. Not required if running locally with installed services.
+
 version: "3.9"
 
 services:
@@ -7,17 +9,63 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    healthcheck:
+      test:
+        ["CMD-SHELL", 'mongosh --eval ''db.adminCommand("ping")'' || exit 1']
+      interval: 5s
+      retries: 5
+      timeout: 5s
 
   tti-redis:
     image: redis:8
     ports:
-      - "6380:6379"
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 5
+      timeout: 5s
 
   tti-rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - "5672:5672" # AMQP
-      - "15672:15672" # Management UI
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      retries: 5
+      timeout: 5s
+
+  tti-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+    depends_on:
+      tti-mongo:
+        condition: service_healthy
+      tti-redis:
+        condition: service_healthy
+      tti-rabbitmq:
+        condition: service_healthy
+
+  tti-worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      tti-mongo:
+        condition: service_healthy
+      tti-redis:
+        condition: service_healthy
+      tti-rabbitmq:
+        condition: service_healthy
 
 volumes:
   mongo-data:
