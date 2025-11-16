@@ -5,11 +5,11 @@ const taskSchema = new mongoose.Schema({
   description: { type: String },
   status: {
     type: String,
-    enum: ["pending", "in-progress", "done"],
-    default: "pending",
+    enum: ["new", "in-progress", "done"],
+    default: "new",
   },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Task", taskSchema);
+module.exports = mongoose.models.Task || mongoose.model("Task", taskSchema);

@@ -1,6 +1,7 @@
+// src/app.js
 const express = require("express");
 const cors = require("cors");
-const routes = require("./routes"); // or "./routes/index.js"
+const routes = require("./routes");
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.get("/health", (req, res) => {
   });
 });
 
+app.use("/api", routes);
+
 // 404 handler for unmatched routes
 app.use((req, res) => {
   res.status(404).json({
@@ -25,8 +28,5 @@ app.use((req, res) => {
     path: req.originalUrl,
   });
 });
-
-const taskRoutes = require("./routes/taskRoutes");
-app.use("/api", routes);
 
 module.exports = app;
