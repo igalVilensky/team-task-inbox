@@ -1,0 +1,5 @@
+// Stats Action Types
+
+export const STATS_FETCH_REQUEST = "STATS/FETCH_REQUEST";
+export const STATS_FETCH_SUCCESS = "STATS/FETCH_SUCCESS";
+export const STATS_FETCH_FAILURE = "STATS/FETCH_FAILURE";
