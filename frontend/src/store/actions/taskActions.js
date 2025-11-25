@@ -1,5 +1,21 @@
 import * as types from "./taskTypes";
 
+// --- Create task ---
+export const createTask = (taskData) => ({
+  type: types.TASK_CREATE_REQUEST,
+  payload: taskData,
+});
+
+export const createTaskSuccess = (task) => ({
+  type: types.TASK_CREATE_SUCCESS,
+  payload: task,
+});
+
+export const createTaskFailure = (error) => ({
+  type: types.TASK_CREATE_FAILURE,
+  payload: error,
+});
+
 // --- Fetch tasks ---
 export const fetchTasks = () => ({
   type: types.TASK_FETCH_REQUEST,

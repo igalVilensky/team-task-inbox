@@ -4,10 +4,11 @@ import { createSelector } from "reselect";
 const selectTaskState = (state) => state.tasks;
 
 // Raw selectors
-export const selectTasks = createSelector(
-  [selectTaskState],
-  (taskState) => taskState.items
-);
+export const selectTasks = (state) => ({
+  data: state.tasks.items,
+  loading: state.tasks.loading,
+  error: state.tasks.error,
+});
 
 export const selectTaskLoading = createSelector(
   [selectTaskState],

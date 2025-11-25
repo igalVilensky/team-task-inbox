@@ -11,7 +11,7 @@ import { selectStats } from "../store/selectors/statsSelectors";
 const TasksPage = () => {
   const dispatch = useDispatch();
 
-  const tasks = useSelector(selectTasks);
+  const tasksState = useSelector(selectTasks);
   const stats = useSelector(selectStats);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const TasksPage = () => {
     <div style={{ display: "flex", padding: "1rem" }}>
       {/* Task list */}
       <div style={{ flex: 3, marginRight: "1rem" }}>
-        <TaskList tasks={tasks} onStatusChange={handleStatusChange} />
+        <TaskList tasks={tasksState.data || []} onStatusChange={handleStatusChange} />
       </div>
 
       {/* Stats sidebar */}
