@@ -11,18 +11,34 @@ const Container = styled.div`
   border: 1px solid ${techColors.border};
   border-radius: 8px;
   padding: 1.5rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    border-radius: 4px;
+  }
 `;
 
 const Header = styled.h2`
   margin: 0 0 1.5rem 0;
   color: ${techColors.text};
   font-size: 1.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+    margin: 0 0 1rem 0;
+  }
 `;
 
 const Form = styled.form`
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const Input = styled.input`
@@ -95,6 +111,13 @@ const TaskItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
 `;
 
 const TaskInfo = styled.div`
@@ -125,6 +148,11 @@ const StatusButton = styled.button`
 
   &:hover {
     transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0.75rem;
   }
 `;
 

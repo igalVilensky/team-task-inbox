@@ -16,6 +16,10 @@ const Container = styled.div`
   min-height: 100vh;
   background: ${techColors.background};
   padding: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const Header = styled.div`
@@ -35,12 +39,20 @@ const Title = styled.h1`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+  }
 `;
 
 const Subtitle = styled.p`
   color: ${techColors.textMuted};
   font-size: 1.1rem;
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+  }
 `;
 
 const TabContainer = styled.div`
@@ -49,6 +61,12 @@ const TabContainer = styled.div`
   margin-bottom: 2rem;
   border-bottom: 2px solid ${techColors.border};
   padding-bottom: 0;
+  overflow-x: auto;
+
+  @media (max-width: 768px) {
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const Tab = styled.button`
@@ -62,9 +80,15 @@ const Tab = styled.button`
   font-weight: 600;
   transition: all 0.2s;
   margin-bottom: -2px;
+  white-space: nowrap;
 
   &:hover {
     color: ${techColors.react};
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -88,6 +112,12 @@ const Grid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 1.5rem;
   margin-bottom: 1.5rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const FullWidth = styled.div`
