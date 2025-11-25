@@ -14,3 +14,8 @@ export const updateTaskApi = async (taskId, updates) => {
   const res = await apiClient.patch(`/tasks/${taskId}`, updates);
   return res.data;
 };
+
+export const deleteTaskApi = async (taskId) => {
+  const res = await apiClient.delete(`/tasks/${taskId}`);
+  return res.data;
+};

@@ -46,3 +46,19 @@ export const updateTaskStatusFailure = (error) => ({
   type: types.TASK_UPDATE_STATUS_FAILURE,
   payload: error,
 });
+
+// --- Delete task ---
+export const deleteTask = (id) => ({
+  type: types.TASK_DELETE_REQUEST,
+  payload: id,
+});
+
+export const deleteTaskSuccess = (id) => ({
+  type: types.TASK_DELETE_SUCCESS,
+  payload: id,
+});
+
+export const deleteTaskFailure = (error) => ({
+  type: types.TASK_DELETE_FAILURE,
+  payload: error,
+});

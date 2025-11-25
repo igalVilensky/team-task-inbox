@@ -110,6 +110,31 @@ class TaskService {
 
     return stats;
   }
+
+  async deleteTask(id) {
+    const task = await Task.findByIdAndDelete(id);
+
+    if (!task) throw new Error("Task not found");
+
+    // Log MongoDB operation
+    eventLogger.logMongoDB("DELETE", "tasks", { id }, {
+      id: task._id,
+      title: task.title,
+    });
+
+    const eventPayload = {
+      taskId: task._id,
+      title: task.title,
+      deletedAt: new Date(),
+    };
+
+    await rabbitMQ.publishEvent("task.deleted", eventPayload);
+
+    // Log RabbitMQ publish
+    eventLogger.logRabbitMQ("PUBLISH", "task.deleted", eventPayload);
+
+    return { success: true, task };
+  }
 }
 
 module.exports = new TaskService();

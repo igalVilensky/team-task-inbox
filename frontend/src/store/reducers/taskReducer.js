@@ -48,6 +48,20 @@ export default function tasksReducer(state = initialState, action) {
     case types.TASK_UPDATE_STATUS_FAILURE:
       return { ...state, loading: false, error: action.payload };
 
+    // --- DELETE TASK ---
+    case types.TASK_DELETE_REQUEST:
+      return { ...state, loading: true, error: null };
+
+    case types.TASK_DELETE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        items: state.items.filter((t) => t._id !== action.payload),
+      };
+
+    case types.TASK_DELETE_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+
     default:
       return state;
   }

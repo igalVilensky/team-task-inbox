@@ -31,10 +31,20 @@ class TaskController {
 
   async stats(req, res) {
     try {
-      const stats = await taskService.computeStats();
+      const stats = await taskService.getStats();
       res.json(stats);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  async deleteTask(req, res) {
+    try {
+      const { id } = req.params;
+      const deleted = await taskService.deleteTask(id);
+      res.json(deleted);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
   }
 }

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { techColors } from "../../styles/learningTheme";
-import { createTask, updateTaskStatus } from "../../store/actions/taskActions";
+import { createTask, updateTaskStatus, deleteTask } from "../../store/actions/taskActions";
 import { selectTasks } from "../../store/selectors/taskSelectors";
 
 const Container = styled.div`
@@ -111,6 +111,7 @@ const TaskItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.75rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -151,8 +152,39 @@ const StatusButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    width: 100%;
+    flex: 1;
     padding: 0.75rem;
+  }
+`;
+
+const DeleteButton = styled.button`
+  padding: 0.5rem 1rem;
+  background: ${techColors.error};
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+    background: #dc2626;
+  }
+
+  @media (max-width: 768px) {
+    flex: 1;
+    padding: 0.75rem;
+  }
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 0.5rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `;
 
@@ -172,6 +204,12 @@ const InteractiveCRUD = () => {
   const handleToggleStatus = (task) => {
     const newStatus = task.status === "new" ? "done" : "new";
     dispatch(updateTaskStatus(task._id, { status: newStatus }));
+  };
+
+  const handleDelete = (task) => {
+    if (window.confirm(`Delete task "${task.title}"?`)) {
+      dispatch(deleteTask(task._id));
+    }
   };
 
   return (
@@ -212,12 +250,17 @@ const InteractiveCRUD = () => {
                   Status: {task.status} • Created: {new Date(task.createdAt).toLocaleString()}
                 </TaskMeta>
               </TaskInfo>
-              <StatusButton
-                status={task.status}
-                onClick={() => handleToggleStatus(task)}
-              >
-                Mark as {task.status === "new" ? "Done" : "New"}
-              </StatusButton>
+              <ButtonGroup>
+                <StatusButton
+                  status={task.status}
+                  onClick={() => handleToggleStatus(task)}
+                >
+                  Mark as {task.status === "new" ? "Done" : "New"}
+                </StatusButton>
+                <DeleteButton onClick={() => handleDelete(task)}>
+                  🗑️ Delete
+                </DeleteButton>
+              </ButtonGroup>
             </TaskItem>
           ))
         ) : (
